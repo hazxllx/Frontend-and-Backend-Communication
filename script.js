@@ -21,6 +21,30 @@ document.addEventListener('DOMContentLoaded', function() {
     buttons.fetchAll.disabled = false;
 });
 
+// Button ripple effect
+document.addEventListener('click', function(event) {
+    const button = event.target.closest('.action-btn');
+    if (button) {
+        const ripple = button.querySelector('.btn-ripple');
+        if (ripple) {
+            ripple.style.left = '-100%';
+            setTimeout(() => ripple.style.left = '100%', 50);
+        }
+    }
+});
+
+// Enter key functionality
+document.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const activeTab = document.querySelector('.tab-content.active');
+        if (activeTab) {
+            const primaryButton = activeTab.querySelector('.action-btn:not(:disabled)');
+            if (primaryButton) primaryButton.click();
+        }
+    }
+});
+
 // Para sa tab switching
 function setupTabs() {
     document.querySelectorAll('.tab-btn').forEach(btn => {

@@ -176,7 +176,7 @@
                                 <div class="btn-ripple"></div>
                             </button>
                         </div>
-                        <div class="info-text">Di pa sya working./div>
+                        <div class="info-text">Di pa sya working.</div>
                         
                         <!-- All Users Display -->
                         <div id="allUsersContainer" class="all-users-container hidden">
@@ -195,7 +195,7 @@
         </div>
     </div>
 
-    <!-- User Card Template (NEW) -->
+    <!-- User Card Template -->
     <template id="userCardTemplate">
         <div class="user-card">
             <div class="user-card-header">
@@ -208,33 +208,7 @@
             </div>
         </div>
     </template>
-
-    <!-- Move some JS functionality to HTML (NEW) -->
-    <script>
-        // Button ripple effect
-        document.addEventListener('click', function(event) {
-            const button = event.target.closest('.action-btn');
-            if (button) {
-                const ripple = button.querySelector('.btn-ripple');
-                if (ripple) {
-                    ripple.style.left = '-100%';
-                    setTimeout(() => ripple.style.left = '100%', 50);
-                }
-            }
-        });
-
-        // Enter key functionality
-        document.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const activeTab = document.querySelector('.tab-content.active');
-                if (activeTab) {
-                    const primaryButton = activeTab.querySelector('.action-btn:not(:disabled)');
-                    if (primaryButton) primaryButton.click();
-                }
-            }
-        });
-    </script>
+    
     <script src="script.js"></script>
 </body>
 </html>
