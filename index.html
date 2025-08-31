@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend and Backend Communication</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Netflix-style Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-background">
+            <div class="gradient-overlay"></div>
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+        
+        <div class="splash-content">
+            <div class="logo-animation">
+                <div class="logo-text">FBC</div>
+                <div class="logo-subtitle">Frontend Backend Communication</div>
+            </div>
+            
+            <button class="enter-btn" id="getStartedBtn">
+                <span>Get Started</span>
+                <div class="btn-glow"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content hidden">
+        <nav class="navbar">
+            <div class="nav-brand">FBC</div>
+            <div class="nav-status">
+                <div class="status-dot"></div>
+                <span>Connected</span>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Modern Tab System -->
+            <div class="tab-system">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="create">Create</button>
+                    <button class="tab-btn" data-tab="fetch">Fetch</button>
+                    <button class="tab-btn" data-tab="update">Update</button>
+                    <button class="tab-btn" data-tab="management">Management</button>
+                </div>
+
+                <!-- Create Tab -->
+                <div class="tab-content active" id="create-tab">
+                    <div class="section-header">
+                        <h2>Create New User</h2>
+                        <p>Create user with  username (your surname) and a password (not real password). </p>
+                    </div>
+                    <div class="form-container">
+                        <div class="input-group">
+                            <input type="text" id="username" placeholder=" " required>
+                            <label for="username">Username</label>
+                            <div class="input-line"></div>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="password" placeholder=" " required>
+                            <label for="password">Password</label>
+                            <div class="input-line"></div>
+                        </div>
+                        <button id="createUserBtn" class="action-btn primary" disabled>
+                            <span>Create User</span>
+                            <div class="btn-ripple"></div>
+                        </button>
+                        <div class="info-text">Your user ID will be generated automatically</div>
+                    </div>
+                </div>
+
+                <!-- Fetch Tab -->
+                <div class="tab-content" id="fetch-tab">
+                    <div class="section-header">
+                        <h2>Fetch User Data</h2>
+                        <p>Retrieve user information using your 6-character code</p>
+                    </div>
+                    <div class="form-container">
+                        <div class="input-group">
+                            <input type="text" id="userId" placeholder=" " maxlength="6">
+                            <label for="userId">User Code</label>
+                            <div class="input-line"></div>
+                        </div>
+                        <button id="fetchUserBtn" class="action-btn primary" disabled>
+                            <span>Fetch Data</span>
+                            <div class="btn-ripple"></div>
+                        </button>
+                        <div class="info-text">Code will be auto-filled after user creation</div>
+                        
+                        <!-- User Details Display - Username Removed -->
+                        <div id="userDetails" class="user-details hidden">
+                            <h3>User Details</h3>
+                            <div class="detail-card">
+                                <div class="detail-item">
+                                    <span class="detail-label">User ID:</span>
+                                    <span id="detailUserId" class="detail-value">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Code:</span>
+                                    <span id="detailCode" class="detail-value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Tab -->
+                <div class="tab-content" id="update-tab">
+                    <div class="section-header">
+                        <h2>Update Profile</h2>
+                        <p>Modify your user information</p>
+                    </div>
+                    <div class="form-container">
+                        <div class="input-group">
+                            <input type="text" id="newUsername" placeholder=" " required>
+                            <label for="newUsername">New Username</label>
+                            <div class="input-line"></div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="hiddenUserId" readonly placeholder=" ">
+                            <label for="hiddenUserId">User ID</label>
+                            <div class="input-line"></div>
+                        </div>
+                        <button id="updateUserBtn" class="action-btn primary" disabled>
+                            <span>Update Profile</span>
+                            <div class="btn-ripple"></div>
+                        </button>
+                        <div class="info-text">User ID will be filled automatically</div>
+                        
+                        <!-- Updated User Display -->
+                        <div id="updatedUser" class="user-details hidden">
+                            <h3>Updated User</h3>
+                            <div class="detail-card">
+                                <div class="detail-item">
+                                    <span class="detail-label">New Username:</span>
+                                    <span id="updatedUsername" class="detail-value">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">User ID:</span>
+                                    <span id="updatedUserId" class="detail-value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management Tab -->
+                <div class="tab-content" id="management-tab">
+                    <div class="section-header">
+                        <h2>User Management</h2>
+                        <p>View all users and manage your account</p>
+                    </div>
+                    <div class="form-container">
+                        <div class="action-grid">
+                            <button id="fetchAllBtn" class="action-btn success">
+                                <span>View All Users</span>
+                                <div class="btn-ripple"></div>
+                            </button>
+                            <div class="input-group">
+                                <input type="text" id="deleteUserId" readonly placeholder=" ">
+                                <label for="deleteUserId">User ID to Delete</label>
+                                <div class="input-line"></div>
+                            </div>
+                            <button id="deleteUserBtn" class="action-btn danger" disabled>
+                                <span>Delete Account</span>
+                                <div class="btn-ripple"></div>
+                            </button>
+                        </div>
+                        <div class="info-text">Di pa sya working./div>
+                        
+                        <!-- All Users Display -->
+                        <div id="allUsersContainer" class="all-users-container hidden">
+                            <h3>All Users</h3>
+                            <div id="usersGrid" class="users-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <p>Base URL: <code>https://fordemo-ot4j.onrender.com</code></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- User Card Template (NEW) -->
+    <template id="userCardTemplate">
+        <div class="user-card">
+            <div class="user-card-header">
+                <h4 class="user-name">Username</h4>
+                <button class="close-btn" onclick="removeCard(this)">×</button>
+            </div>
+            <div class="user-card-info">
+                <p><strong>ID:</strong> <span class="user-id">N/A</span></p>
+                <p><strong>Code:</strong> <span class="user-code">N/A</span></p>
+            </div>
+        </div>
+    </template>
+
+    <!-- Move some JS functionality to HTML (NEW) -->
+    <script>
+        // Button ripple effect
+        document.addEventListener('click', function(event) {
+            const button = event.target.closest('.action-btn');
+            if (button) {
+                const ripple = button.querySelector('.btn-ripple');
+                if (ripple) {
+                    ripple.style.left = '-100%';
+                    setTimeout(() => ripple.style.left = '100%', 50);
+                }
+            }
+        });
+
+        // Enter key functionality
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const activeTab = document.querySelector('.tab-content.active');
+                if (activeTab) {
+                    const primaryButton = activeTab.querySelector('.action-btn:not(:disabled)');
+                    if (primaryButton) primaryButton.click();
+                }
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
